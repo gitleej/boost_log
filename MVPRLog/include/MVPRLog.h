@@ -17,49 +17,42 @@
 
 #define GET_LOG_PATH() MVPRLog::GetInstance()->getLogPath()
 
-#include <fstream>
-#include <iomanip>
-#include <boost/log/core.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
-#include <boost/smart_ptr/make_shared_object.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/sinks/sync_frontend.hpp>
-#include <boost/log/sinks/text_ostream_backend.hpp>
-#include <boost/log/sources/severity_logger.hpp>
-#include <boost/log/sources/record_ostream.hpp>
-#include <boost/log/utility/setup/common_attributes.hpp>
-#include <boost/core/null_deleter.hpp>
+#include "AbstractLogger.h"
+#include "AbstractLogConfig.h"
 
-namespace logging = boost::log;
-namespace sinks = boost::log::sinks;
-namespace src = boost::log::sources;
-namespace expr = boost::log::expressions;
-namespace attrs = boost::log::attributes;
-namespace keywords = boost::log::keywords;
-
+/**
+ * @brief   日志接口类，单例模式
+ */
 class MVPRLog {
 private:
-    void boostLogInit(const char * logPath);
+//    void boostLogInit(const char * logPath);
 
-    static MVPRLog* _pInstance;
+    static MVPRLog*     _pInstance;                ///< 私有实例
+    AbstractLogger*     m_logger = nullptr;        ///< 日志记录器
+    AbstractLogConfig*  m_logConfig = nullptr;     ///< 日志配置
+//    char*     m_logPath;                  ///< 日志保存文件夹
 
 protected:
+    /**
+     * @brief   构造函数
+     */
     MVPRLog();
-    MVPRLog(const char* logPath);
-    ~MVPRLog();
+//    MVPRLog(const char* logPath);
 
-    char*     m_logPath;      ///< 日志保存文件夹
+    /**
+     * @brief   析构函数
+     */
+    ~MVPRLog();
 
 public:
     MVPRLog(MVPRLog &other) = delete;
     void operator=(const MVPRLog&) = delete;
     static MVPRLog* GetInstance();
     static void Init();
-    static void Init(const char * logPath);
+//    static void Init(const char * logPath);
 
     // TODO: 其他业务逻辑
-    char * getLogPath();
+//    char * getLogPath();
 };
 
 #endif //BOOST_LOG_TEST_MVPRLOG_H

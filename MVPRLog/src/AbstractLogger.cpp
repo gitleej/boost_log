@@ -1,0 +1,7 @@
+//
+// Created by AILEE on 2022/5/18.
+//
+
+#include "AbstractLogger.h"
+
+AbstractLogger::~AbstractLogger() = default;
