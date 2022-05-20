@@ -15,17 +15,24 @@ public:
      * @param logConfig 日志配置器
      * @return  返回初始化状态，成功为0，失败为错误代码
      */
-    virtual int Init(AbstractLogConfig &logConfig) = 0;
+    virtual int Init(const AbstractLogConfig &logConfig) = 0;
 
     /**
      * @brief   写日志
      */
-    virtual void WriteLog() = 0;
+    static void WriteLog(const char *filename,
+                          const char *func,
+                          int line,
+                          severity_levels level,
+                          const char* fmt, ...) {};
 
     /**
      * @brief   停止日志记录
      */
     virtual void Stop() = 0;
+
+public:
+    AbstractLogConfig *m_logConfig = nullptr;
 };
 
 

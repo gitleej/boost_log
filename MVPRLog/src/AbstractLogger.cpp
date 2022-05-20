@@ -4,4 +4,9 @@
 
 #include "AbstractLogger.h"
 
-AbstractLogger::~AbstractLogger() = default;
+AbstractLogger::~AbstractLogger() {
+    if (this->m_logConfig != nullptr) {
+        delete this->m_logConfig;
+        this->m_logConfig = nullptr;
+    }
+}

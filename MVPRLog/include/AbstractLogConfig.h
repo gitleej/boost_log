@@ -7,6 +7,22 @@
 
 #include <string>
 
+typedef struct TimePointType {
+    unsigned int hour;
+    unsigned int minute;
+    unsigned int second;
+} TimePoint;
+
+enum severity_levels
+{
+    trace = 0,
+    debug,
+    info,
+    warning,
+    error,
+    fatal
+};
+
 /**
  * @brief   抽象日志配置类
  */
@@ -31,6 +47,8 @@ public:
     std::string         m_logPath;              ///< 日志存储路径
     std::string         m_logLevel;             ///< 日志存储级别
     std::string         m_logRotaType;          ///< 日志归档方式
+    unsigned int        m_logRotaSize;          ///< 日志归档大小
+    TimePoint           m_logRotaTimePoint;     ///< 日志归档时间点
     bool                m_isSynchronize;        ///< 是否同步
     bool                m_is2Console;           ///< 是否输出到控制台
 };

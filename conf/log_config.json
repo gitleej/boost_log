@@ -1,8 +1,16 @@
 {
-  "log_filename": "MVPR_%Y%m%d%H%M%S_%N.log",
+  "log_filename": "MVPR_%Y%m%d%H%M%S.%N.log",
   "log_path": "./logs/",
   "log_level": "default",
-  "log_rota_type": "default",
-  "is_console": false,
+  "log_rota": {
+    "type": "default",
+    "size": 32,
+    "time_point": {
+      "hour": 1,
+      "minute": 2,
+      "second": 3
+    }
+  },
+  "is_console": true,
   "is_synchronize": false
 }

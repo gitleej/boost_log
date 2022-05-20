@@ -3,5 +3,5 @@ set(SRC_FILES Testsuite.cpp Testsuite.h)
 add_executable(test_log_config test_log_config.cpp ${SRC_FILES})
 target_link_libraries(test_log_config mvpr_log)
 
-add_executable(test_logger test_logger.cpp)
-target_link_libraries(test_logger ${SRC_FILES})
+add_executable(test_logger test_logger.cpp ${SRC_FILES})
+target_link_libraries(test_logger mvpr_log)
