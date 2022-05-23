@@ -2,8 +2,8 @@
 // Created by AILEE on 2022/5/18.
 //
 
-#ifndef BOOST_LOG_TEST_ABSTRACTLOGGER_H
-#define BOOST_LOG_TEST_ABSTRACTLOGGER_H
+#ifndef MVPR_LOG_ABSTRACTLOGGER_H
+#define MVPR_LOG_ABSTRACTLOGGER_H
 
 #include "AbstractLogConfig.h"
 
@@ -26,6 +26,9 @@ public:
                           severity_levels level,
                           const char* fmt, ...) {};
 
+    virtual void WriteLog(const severity_levels &level,
+                         const char* message) = 0;
+
     /**
      * @brief   停止日志记录
      */
@@ -36,4 +39,4 @@ public:
 };
 
 
-#endif //BOOST_LOG_TEST_ABSTRACTLOGGER_H
+#endif //MVPR_LOG_ABSTRACTLOGGER_H

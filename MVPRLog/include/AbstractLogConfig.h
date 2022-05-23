@@ -2,9 +2,10 @@
 // Created by AILEE on 2022/5/18.
 //
 
-#ifndef BOOST_LOG_TEST_ABSTRACTLOGCONFIG_H
-#define BOOST_LOG_TEST_ABSTRACTLOGCONFIG_H
+#ifndef MVPR_LOG_ABSTRACTLOGCONFIG_H
+#define MVPR_LOG_ABSTRACTLOGCONFIG_H
 
+#include "common.h"
 #include <string>
 
 typedef struct TimePointType {
@@ -12,16 +13,6 @@ typedef struct TimePointType {
     unsigned int minute;
     unsigned int second;
 } TimePoint;
-
-enum severity_levels
-{
-    trace = 0,
-    debug,
-    info,
-    warning,
-    error,
-    fatal
-};
 
 /**
  * @brief   抽象日志配置类
@@ -40,7 +31,7 @@ public:
      * @param configFilePath 配置文件路径
      * @return  返回加载状态值，成功返回0，失败返回错误代码。
      */
-    virtual int LoadConfig(char* configFilePath) = 0;
+    virtual int LoadConfig(const char* configFilePath) = 0;
 
 public:
     std::string         m_logFilename;          ///< 日志文件名称
@@ -54,4 +45,4 @@ public:
 };
 
 
-#endif //BOOST_LOG_TEST_ABSTRACTLOGCONFIG_H
+#endif //MVPR_LOG_ABSTRACTLOGCONFIG_H

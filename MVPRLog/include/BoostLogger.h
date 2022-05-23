@@ -2,8 +2,8 @@
 // Created by AILEE on 2022/5/18.
 //
 
-#ifndef BOOST_LOG_TEST_BOOSTLOGGER_H
-#define BOOST_LOG_TEST_BOOSTLOGGER_H
+#ifndef MVPR_LOG_BOOSTLOGGER_H
+#define MVPR_LOG_BOOSTLOGGER_H
 
 #include "AbstractLogger.h"
 #include "BoostLogConfig.h"
@@ -55,6 +55,8 @@ public:
                          severity_levels level,
                          const char *fmt, ...);
 
+    void WriteLog(const severity_levels &level, const char* message) override;
+
     void Stop() override;
 
 private:
@@ -74,15 +76,13 @@ private:
 
     static attrs::current_thread_id::value_type::native_type get_native_thread_id(
             logging::value_ref<attrs::current_thread_id::value_type, tag::thread_id> const &tid);
-
-    static std::string get_file_line(const char *filename, const char *func, const int &line);
 };
 
-#define LOG_TRACE(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, trace, fmt, ##__VA_ARGS__)
-#define LOG_DEBUG(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, debug, fmt, ##__VA_ARGS__)
-#define LOG_INFO(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, info, fmt, ##__VA_ARGS__)
-#define LOG_WARN(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, warning, fmt, ##__VA_ARGS__)
-#define LOG_ERROR(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, error, fmt, ##__VA_ARGS__)
-#define LOG_FATAL(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, fatal, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_TRACE(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, trace, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_DEBUG(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, debug, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_INFO(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, info, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_WARN(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, warning, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_ERROR(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, error, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_FATAL(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, fatal, fmt, ##__VA_ARGS__)
 
-#endif //BOOST_LOG_TEST_BOOSTLOGGER_H
+#endif //MVPR_LOG_BOOSTLOGGER_H

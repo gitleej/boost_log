@@ -66,10 +66,15 @@ void BoostLogger::WriteLog(const char *filename, const char *func, int line, sev
     char *buffer = new char[1024];
     memset(buffer, 0, 1024);
     vsnprintf_s(buffer, 1024, 1023, fmt, al);
-    std::string file = BoostLogger::get_file_line(filename, func, line);
+    std::string file = get_file_line(filename, func, line);
     std::string msg = buffer;
     src::severity_logger_mt<severity_levels> &lg = globalLogger::get();
     BOOST_LOG_SEV(lg, level) << file << ": " << msg.c_str();
+}
+
+void BoostLogger::WriteLog(const severity_levels &level, const char* message) {
+    src::severity_logger_mt<severity_levels> &lg = globalLogger::get();
+    BOOST_LOG_SEV(lg, level) << message;
 }
 
 void BoostLogger::Stop() {
@@ -226,16 +231,4 @@ BoostLogger::get_native_thread_id(const logging::value_ref<attrs::current_thread
         return tid->native_id();
     }
     return 0;
-}
-
-std::string BoostLogger::get_file_line(const char *filename, const char *func, const int &line) {
-    std::string s = filename;
-    auto idx = s.find_last_of("/\\" );
-    s = s.substr(idx + 1, s.length());
-
-    char buffer[100] = {0};
-    snprintf(buffer, 100, "%s@%s: line:%d", s.c_str(), func, line);
-    s = buffer;
-
-    return s;
 }

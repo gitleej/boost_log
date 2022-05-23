@@ -5,6 +5,7 @@
 #ifndef BOOST_LOG_TEST_TESTSUITE_H
 #define BOOST_LOG_TEST_TESTSUITE_H
 
+#include "../MVPRLog/include/MVPRLog.h"
 #include "../MVPRLog/include/AbstractLogConfig.h"
 #include "../MVPRLog/include/BoostLogConfig.h"
 #include "../MVPRLog/include/AbstractLogger.h"
@@ -14,6 +15,7 @@ class Testsuite {
 public:
     static void testLogConfig();
     static void testLogger();
+    static void testMVPRLogger();
 };
 
 

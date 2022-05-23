@@ -2,8 +2,8 @@
 // Created by AILEE on 2022/5/18.
 //
 
-#ifndef BOOST_LOG_TEST_BOOSTLOGCONFIG_H
-#define BOOST_LOG_TEST_BOOSTLOGCONFIG_H
+#ifndef MVPR_LOG_BOOSTLOGCONFIG_H
+#define MVPR_LOG_BOOSTLOGCONFIG_H
 
 #include "AbstractLogConfig.h"
 
@@ -13,8 +13,8 @@ public:
 
     int LoadConfig() override;
 
-    int LoadConfig(char *configFilePath) override;
+    int LoadConfig(const char *configFilePath) override;
 };
 
 
-#endif //BOOST_LOG_TEST_BOOSTLOGCONFIG_H
+#endif //MVPR_LOG_BOOSTLOGCONFIG_H

@@ -19,7 +19,8 @@ add_library(mvpr_log ./src/MVPRLog.cpp
         src/AbstractLogger.cpp
         src/AbstractLogConfig.cpp
         src/BoostLogger.cpp
-        src/BoostLogConfig.cpp)
+        src/BoostLogConfig.cpp
+        src/common.cpp)
 
 target_link_libraries(mvpr_log
 #        pthread

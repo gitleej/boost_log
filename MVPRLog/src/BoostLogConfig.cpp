@@ -20,7 +20,7 @@ int BoostLogConfig::LoadConfig() {
     return ret;
 }
 
-int BoostLogConfig::LoadConfig(char *configFilePath) {
+int BoostLogConfig::LoadConfig(const char *configFilePath) {
     std::ifstream jsonStrm(configFilePath, std::ios_base::in);
 
     boost::property_tree::ptree root;

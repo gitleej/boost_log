@@ -8,18 +8,31 @@ void Testsuite::testLogConfig() {
     AbstractLogConfig* boostLogConfig = new BoostLogConfig;
 
     boostLogConfig->LoadConfig();
-    boostLogConfig->LoadConfig((char*)"../conf/log_config.json");
+    boostLogConfig->LoadConfig("../conf/log_config.json");
 }
 
 void Testsuite::testLogger() {
     AbstractLogger* boostLogger = new BoostLogger;
     AbstractLogConfig* boostLogConfig = new BoostLogConfig;
 
-    boostLogConfig->LoadConfig((char*)"../conf/log_config.json");
+    boostLogConfig->LoadConfig("../conf/log_config.json");
     boostLogger->Init(*boostLogConfig);
 
     // 写日志
     src::severity_logger_mt<severity_levels> &lg = globalLogger::get();
+    BOOST_LOG_TRACE("its a trace msg.");
+    BOOST_LOG_DEBUG("its a debug msg.");
+    BOOST_LOG_INFO("its an info msg. %s", "ailee");
+    BOOST_LOG_WARN("its an warning msg. %d", 100);
+    BOOST_LOG_ERROR("its an error msg.");
+    BOOST_LOG_FATAL("its an fatal msg");
+
+    boostLogger->Stop();
+}
+
+void Testsuite::testMVPRLogger() {
+    MVPRLog::Init("../conf/log_config.json");
+
     LOG_TRACE("its a trace msg.");
     LOG_DEBUG("its a debug msg.");
     LOG_INFO("its an info msg. %s", "ailee");
@@ -27,5 +40,5 @@ void Testsuite::testLogger() {
     LOG_ERROR("its an error msg.");
     LOG_FATAL("its an fatal msg");
 
-    boostLogger->Stop();
+    MVPRLog::Stop();
 }

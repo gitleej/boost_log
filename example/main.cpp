@@ -4,23 +4,13 @@
 #include "MVPRLog.h"
 
 int main() {
-//    MVPRLog::Init("./test_log_path");
-////    fprintf(stderr, "Log Path: %s\n", MVPRLog::GetInstance()->getLogPath());
-//    fprintf(stderr, "Log Path: %s\n", GET_LOG_PATH());
-//
-////    init();
-////
-////    logging::add_common_attributes();
-//
-//    using namespace logging::trivial;
-//    src::severity_logger< severity_level > lg;
-//
-//    BOOST_LOG_SEV(lg, trace) << "A trace severity message";
-//    BOOST_LOG_SEV(lg, debug) << "A debug severity message";
-//    BOOST_LOG_SEV(lg, info) << "An informational severity message";
-//    BOOST_LOG_SEV(lg, warning) << "A warning severity message";
-//    BOOST_LOG_SEV(lg, error) << "An error severity message";
-//    BOOST_LOG_SEV(lg, fatal) << "A fatal severity message";
-
+    MVPRLog::Init("../conf/log_config.json");
+    LOG_TRACE("its a trace msg.");
+    LOG_DEBUG("its a debug msg.");
+    LOG_INFO("its an info msg. %s", "ailee");
+    LOG_WARN("its an warning msg. %d", 100);
+    LOG_ERROR("its an error msg.");
+    LOG_FATAL("its an fatal msg");
+    MVPRLog::Stop();
     return 0;
 }
