@@ -19,7 +19,7 @@ set(BOOST_COMPONENTS
         date_time
         thread
         regex
-        json
+#        json
         )
 # 使用cmake find_package 查找boost库位置
 find_package(Boost REQUIRED COMPONENTS ${BOOST_COMPONENTS})
