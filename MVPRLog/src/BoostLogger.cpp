@@ -46,6 +46,40 @@ inline std::basic_ostream< CharT, TraitsT >& operator<< (
     return strm;
 }
 
+void coloring_formatter(
+        logging::record_view const& rec, logging::formatting_ostream& strm)
+{
+    auto severity = rec[logging::trivial::severity];
+    if (severity)
+    {
+        // Set the color
+        switch (severity.get())
+        {
+            case logging::trivial::severity_level::info:
+                strm << "\033[32m";
+                break;
+            case logging::trivial::severity_level::warning:
+                strm << "\033[33m";
+                break;
+            case logging::trivial::severity_level::error:
+            case logging::trivial::severity_level::fatal:
+                strm << "\033[31m";
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Format the message here...
+    strm << rec[logging::expressions::smessage];
+
+    if (severity)
+    {
+        // Restore the default color
+        strm << "\033[0m";
+    }
+}
+
 BoostLogger::~BoostLogger() = default;
 
 int BoostLogger::Init(const AbstractLogConfig &logConfig) {
@@ -65,7 +99,8 @@ void BoostLogger::WriteLog(const char *filename, const char *func, int line, sev
     va_start(al, fmt);
     char *buffer = new char[1024];
     memset(buffer, 0, 1024);
-    vsnprintf_s(buffer, 1024, 1023, fmt, al);
+//    vsnprintf(buffer, 1024, 1023, fmt, al);
+    vsnprintf(buffer, 1024, fmt, al);
     std::string file = get_file_line(filename, func, line);
     std::string msg = buffer;
     src::severity_logger_mt<severity_levels> &lg = globalLogger::get();
@@ -190,6 +225,7 @@ int BoostLogger::backendInit(const AbstractLogConfig &logConfig) {
                     % expr::attr<severity_levels>("Severity")
                     % expr::smessage
                     );
+//            stream_sink->set_formatter(& coloring_formatter);
             core->add_sink(stream_sink);
         } else {
             boost::shared_ptr<asyn_stream_sink_t> stream_sink(new asyn_stream_sink_t (text_stream_backend));
@@ -201,6 +237,7 @@ int BoostLogger::backendInit(const AbstractLogConfig &logConfig) {
                     % expr::attr<severity_levels>("Severity")
                     % expr::smessage
                     );
+//            stream_sink->set_formatter(& coloring_formatter);
             core->add_sink(stream_sink);
         }
     }

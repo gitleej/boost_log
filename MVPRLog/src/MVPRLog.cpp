@@ -39,6 +39,7 @@ void MVPRLog::Init() {
         MVPRLog::GetInstance()->m_logConfig = new BoostLogConfig;
         // 加载日志配置文件
         MVPRLog::LoadConfig();
+        MVPRLog::GetInstance()->m_logger->Init(*(MVPRLog::GetInstance()->m_logConfig));
     }
 }
 
@@ -66,7 +67,8 @@ void MVPRLog::WriteLog(const char *filename, const char *func, int line, severit
     va_start(al, fmt);
     char *buffer = new char[1024];
     memset(buffer, 0, 1024);
-    vsnprintf_s(buffer, 1024, 1023, fmt, al);
+//    vsnprintf(buffer, 1024, 1023, fmt, al);
+    vsnprintf(buffer, 1024, fmt, al);
     std::string file = get_file_line(filename, func, line);
     std::string msg = buffer;
     msg = file + ": " + msg;

@@ -31,7 +31,8 @@ void Testsuite::testLogger() {
 }
 
 void Testsuite::testMVPRLogger() {
-    MVPRLog::Init("../conf/log_config.json");
+//    MVPRLog::Init("../conf/log_config.json");
+    MVPRLog::Init();
 
     LOG_TRACE("its a trace msg.");
     LOG_DEBUG("its a debug msg.");
