@@ -36,12 +36,12 @@ namespace keywords = boost::log::keywords;
 
 BOOST_LOG_ATTRIBUTE_KEYWORD(process_id, "ProcessID", attrs::current_process_id::value_type )
 BOOST_LOG_ATTRIBUTE_KEYWORD(thread_id, "ThreadID", attrs::current_thread_id::value_type )
-BOOST_LOG_ATTRIBUTE_KEYWORD(severity, "Severity", severity_levels)
+BOOST_LOG_ATTRIBUTE_KEYWORD(severity, "Severity", logging::trivial::severity_level)
 
 /**
  * @brief   全局日志记录器
  */
-BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(globalLogger, src::severity_logger_mt<severity_levels>)
+BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(globalLogger, src::severity_logger_mt<logging::trivial::severity_level>)
 
 class BoostLogger : public AbstractLogger {
 public:
@@ -52,10 +52,10 @@ public:
     static void WriteLog(const char *filename,
                          const char *func,
                          int line,
-                         severity_levels level,
+                         logging::trivial::severity_level level,
                          const char *fmt, ...);
 
-    void WriteLog(const severity_levels &level, const char* message) override;
+    void WriteLog(const logging::trivial::severity_level &level, const char* message) override;
 
     void Stop() override;
 
@@ -78,11 +78,11 @@ private:
             logging::value_ref<attrs::current_thread_id::value_type, tag::thread_id> const &tid);
 };
 
-#define BOOST_LOG_TRACE(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, trace, fmt, ##__VA_ARGS__)
-#define BOOST_LOG_DEBUG(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, debug, fmt, ##__VA_ARGS__)
-#define BOOST_LOG_INFO(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, info, fmt, ##__VA_ARGS__)
-#define BOOST_LOG_WARN(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, warning, fmt, ##__VA_ARGS__)
-#define BOOST_LOG_ERROR(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, error, fmt, ##__VA_ARGS__)
-#define BOOST_LOG_FATAL(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, fatal, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_TRACE(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, logging::trivial::severity_level::trace, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_DEBUG(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, logging::trivial::severity_level::debug, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_INFO(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, logging::trivial::severity_level::info, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_WARN(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, logging::trivial::severity_level::warning, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_ERROR(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, logging::trivial::severity_level::error, fmt, ##__VA_ARGS__)
+#define BOOST_LOG_FATAL(fmt,...)  BoostLogger::WriteLog(__FILE__, __FUNCTION__, __LINE__, logging::trivial::severity_level::fatal, fmt, ##__VA_ARGS__)
 
 #endif //MVPR_LOG_BOOSTLOGGER_H

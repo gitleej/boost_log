@@ -62,7 +62,7 @@ void MVPRLog::LoadConfig(const char *configFilePath) {
     MVPRLog::GetInstance()->m_logConfig->LoadConfig(configFilePath);
 }
 
-void MVPRLog::WriteLog(const char *filename, const char *func, int line, severity_levels level, const char *fmt, ...) {
+void MVPRLog::WriteLog(const char *filename, const char *func, int line, logging::trivial::severity_level level, const char *fmt, ...) {
     va_list al;
     va_start(al, fmt);
     char *buffer = new char[1024];

@@ -19,7 +19,7 @@ void Testsuite::testLogger() {
     boostLogger->Init(*boostLogConfig);
 
     // 写日志
-    src::severity_logger_mt<severity_levels> &lg = globalLogger::get();
+    src::severity_logger_mt<logging::trivial::severity_level> &lg = globalLogger::get();
     BOOST_LOG_TRACE("its a trace msg.");
     BOOST_LOG_DEBUG("its a debug msg.");
     BOOST_LOG_INFO("its an info msg. %s", "ailee");

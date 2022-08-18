@@ -6,6 +6,9 @@
 #define MVPR_LOG_ABSTRACTLOGGER_H
 
 #include "AbstractLogConfig.h"
+#include <boost/log/trivial.hpp>
+
+namespace logging = boost::log;
 
 class AbstractLogger {
 public:
@@ -23,10 +26,10 @@ public:
     static void WriteLog(const char *filename,
                           const char *func,
                           int line,
-                          severity_levels level,
+                         logging::trivial::severity_level level,
                           const char* fmt, ...) {};
 
-    virtual void WriteLog(const severity_levels &level,
+    virtual void WriteLog(const logging::trivial::severity_level &level,
                          const char* message) = 0;
 
     /**
