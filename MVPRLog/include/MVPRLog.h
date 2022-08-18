@@ -62,7 +62,7 @@ public:
     static void WriteLog(const char *filename,
                          const char *func,
                          int line,
-                         severity_levels level,
+                         mvpr::severity_levels level,
                          const char *fmt, ...);
 
     /**
@@ -83,11 +83,11 @@ private:
     static void LoadConfig(const char * configFilePath);
 };
 
-#define LOG_TRACE(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, trace, fmt, ##__VA_ARGS__)
-#define LOG_DEBUG(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, debug, fmt, ##__VA_ARGS__)
-#define LOG_INFO(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, info, fmt, ##__VA_ARGS__)
-#define LOG_WARN(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, warning, fmt, ##__VA_ARGS__)
-#define LOG_ERROR(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, error, fmt, ##__VA_ARGS__)
-#define LOG_FATAL(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, fatal, fmt, ##__VA_ARGS__)
+#define LOG_TRACE(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, mvpr::trace, fmt, ##__VA_ARGS__)
+#define LOG_DEBUG(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, mvpr::debug, fmt, ##__VA_ARGS__)
+#define LOG_INFO(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, mvpr::info, fmt, ##__VA_ARGS__)
+#define LOG_WARN(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, mvpr::warning, fmt, ##__VA_ARGS__)
+#define LOG_ERROR(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, mvpr::error, fmt, ##__VA_ARGS__)
+#define LOG_FATAL(fmt,...)  MVPRLog::GetInstance()->WriteLog(__FILE__, __FUNCTION__, __LINE__, mvpr::fatal, fmt, ##__VA_ARGS__)
 
 #endif //MVPR_LOG_MVPRLOG_H

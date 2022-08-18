@@ -28,7 +28,7 @@ typedef sinks::asynchronous_sink<sinks::text_file_backend> asyn_file_sink_t;
 
 template< typename CharT, typename TraitsT >
 inline std::basic_ostream< CharT, TraitsT >& operator<< (
-        std::basic_ostream< CharT, TraitsT >& strm, severity_levels lvl)
+        std::basic_ostream< CharT, TraitsT >& strm, mvpr::severity_levels lvl)
 {
     static const char* const str[] =
             {
@@ -94,7 +94,7 @@ int BoostLogger::Init(const AbstractLogConfig &logConfig) {
     return 0;
 }
 
-void BoostLogger::WriteLog(const char *filename, const char *func, int line, severity_levels level, const char *fmt, ...) {
+void BoostLogger::WriteLog(const char *filename, const char *func, int line, mvpr::severity_levels level, const char *fmt, ...) {
     va_list al;
     va_start(al, fmt);
     char *buffer = new char[1024];
@@ -103,12 +103,12 @@ void BoostLogger::WriteLog(const char *filename, const char *func, int line, sev
     vsnprintf(buffer, 1024, fmt, al);
     std::string file = get_file_line(filename, func, line);
     std::string msg = buffer;
-    src::severity_logger_mt<severity_levels> &lg = globalLogger::get();
+    src::severity_logger_mt<mvpr::severity_levels> &lg = globalLogger::get();
     BOOST_LOG_SEV(lg, level) << file << ": " << msg.c_str();
 }
 
-void BoostLogger::WriteLog(const severity_levels &level, const char* message) {
-    src::severity_logger_mt<severity_levels> &lg = globalLogger::get();
+void BoostLogger::WriteLog(const mvpr::severity_levels &level, const char* message) {
+    src::severity_logger_mt<mvpr::severity_levels> &lg = globalLogger::get();
     BOOST_LOG_SEV(lg, level) << message;
 }
 
@@ -159,22 +159,22 @@ int BoostLogger::backendInit(const AbstractLogConfig &logConfig) {
                 % expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S.%f")
                 % boost::phoenix::bind(&BoostLogger::get_native_process_id, process_id.or_none())
                 % boost::phoenix::bind(&BoostLogger::get_native_thread_id, thread_id.or_none())
-                % expr::attr<severity_levels>("Severity")
+                % expr::attr<mvpr::severity_levels>("Severity")
                 % expr::smessage
                 );
         // 日志保留级别
         if (logConfig.m_logLevel == "trace") {
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= trace);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::trace);
         } else if (logConfig.m_logLevel == "debug"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= debug);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::debug);
         } else if (logConfig.m_logLevel == "info"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= info);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::info);
         } else if (logConfig.m_logLevel == "warning"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= warning);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::warning);
         } else if (logConfig.m_logLevel == "error"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= error);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::error);
         }else if (logConfig.m_logLevel == "fatal"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= fatal);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::fatal);
         }
 
         core->add_sink(text_sink);
@@ -185,22 +185,22 @@ int BoostLogger::backendInit(const AbstractLogConfig &logConfig) {
                 % expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S.%f")
                 % boost::phoenix::bind(&BoostLogger::get_native_process_id, process_id.or_none())
                 % boost::phoenix::bind(&BoostLogger::get_native_thread_id, thread_id.or_none())
-                % expr::attr<severity_levels>("Severity")
+                % expr::attr<mvpr::severity_levels>("Severity")
                 % expr::smessage
         );
         // 日志保留级别
         if (logConfig.m_logLevel == "trace") {
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= trace);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::trace);
         } else if (logConfig.m_logLevel == "debug"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= debug);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::debug);
         } else if (logConfig.m_logLevel == "info"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= info);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::info);
         } else if (logConfig.m_logLevel == "warning"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= warning);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::warning);
         } else if (logConfig.m_logLevel == "error"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= error);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::error);
         }else if (logConfig.m_logLevel == "fatal"){
-            text_sink->set_filter(expr::attr< severity_levels >("Severity") >= fatal);
+            text_sink->set_filter(expr::attr< mvpr::severity_levels >("Severity") >= mvpr::fatal);
         }
 
         core->add_sink(text_sink);
@@ -222,7 +222,7 @@ int BoostLogger::backendInit(const AbstractLogConfig &logConfig) {
                     % expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S.%f")
                     % boost::phoenix::bind(&BoostLogger::get_native_process_id, process_id.or_none())
                     % boost::phoenix::bind(&BoostLogger::get_native_thread_id, thread_id.or_none())
-                    % expr::attr<severity_levels>("Severity")
+                    % expr::attr<mvpr::severity_levels>("Severity")
                     % expr::smessage
                     );
 //            stream_sink->set_formatter(& coloring_formatter);
@@ -234,7 +234,7 @@ int BoostLogger::backendInit(const AbstractLogConfig &logConfig) {
                     % expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S.%f")
                     % boost::phoenix::bind(&BoostLogger::get_native_process_id, process_id.or_none())
                     % boost::phoenix::bind(&BoostLogger::get_native_thread_id, thread_id.or_none())
-                    % expr::attr<severity_levels>("Severity")
+                    % expr::attr<mvpr::severity_levels>("Severity")
                     % expr::smessage
                     );
 //            stream_sink->set_formatter(& coloring_formatter);

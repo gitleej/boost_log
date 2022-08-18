@@ -23,10 +23,10 @@ public:
     static void WriteLog(const char *filename,
                           const char *func,
                           int line,
-                          severity_levels level,
+                          mvpr::severity_levels level,
                           const char* fmt, ...) {};
 
-    virtual void WriteLog(const severity_levels &level,
+    virtual void WriteLog(const mvpr::severity_levels &level,
                          const char* message) = 0;
 
     /**
