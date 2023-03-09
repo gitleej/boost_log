@@ -31,7 +31,8 @@ add_library(mvpr_log ./src/MVPRLog.cpp
         src/AbstractLogConfig.cpp
         src/BoostLogger.cpp
         src/BoostLogConfig.cpp
-        src/common.cpp)
+        src/common.cpp src/Utils.cpp
+        include/Utils.hpp)
 
 message (${Boost_LIBRARIES})
 

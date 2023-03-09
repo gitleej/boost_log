@@ -3,11 +3,15 @@
 //
 
 #include "BoostLogConfig.h"
+#include "Utils.hpp"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/exception/all.hpp>
 
 #include <fstream>
+
+#include <iostream>
 
 BoostLogConfig::~BoostLogConfig() = default;
 
@@ -21,10 +25,20 @@ int BoostLogConfig::LoadConfig() {
 }
 
 int BoostLogConfig::LoadConfig(const char *configFilePath) {
+    if (!mvpr_log::Utils::isExist(configFilePath)) {
+        std::cout << "No such file or directory. " << "\"" << configFilePath << "\"" << std::endl;
+        return -1;
+    }
     std::ifstream jsonStrm(configFilePath, std::ios_base::in);
 
     boost::property_tree::ptree root;
-    boost::property_tree::read_json(jsonStrm, root);
+    try {
+        boost::property_tree::read_json(jsonStrm, root);
+    }
+    catch (boost::exception &e) {
+        std::cout << boost::diagnostic_information(e) << std::endl;
+        return -1;
+    }
 
     /**
      * {
