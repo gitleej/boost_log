@@ -3,7 +3,7 @@ project(boost_log_test)
 
 set(CMAKE_CXX_STANDARD 11)
 
-file(COPY conf DESTINATION ${CMAKE_BINARY_DIR})
+#file(COPY conf DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY conf DESTINATION ${CMAKE_BINARY_DIR}/test)
 
 add_subdirectory(./example)
